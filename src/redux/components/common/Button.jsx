@@ -1,8 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 
-function Button({ backgroundColor, children }) {
-  return <StyleButton backgroundColor={backgroundColor}>{children}</StyleButton>
+function Button({ backgroundColor, children, onClick, type }) {
+  return (
+    <StyleButton type={type} onClick={onClick} backgroundColor={backgroundColor}>
+      {children}
+    </StyleButton>
+  )
 }
 
 export default Button
