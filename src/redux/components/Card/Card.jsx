@@ -2,8 +2,6 @@ import React from 'react'
 import Button from '../common/Button'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import { removeCard } from '../../modules/cards'
-import { useDispatch } from 'react-redux'
 import axios from 'axios'
 
 function Card({ card }) {

@@ -17,15 +17,14 @@ function DetailBox() {
   const [cards, setCards] = useState(null)
 
   // patch에서 사용할 id, 수정값의 state를 추가
-  const [targetId, setTargetId] = useState(null)
-  const [editTitle, setEditTitle] = useState({
-    title: '',
-    comments: '',
-  })
-  // const [editComments, setEditComments] = useState({
-  //   comments: '',
-  // })
-
+  const [targetId, setTargetId] = useState('')
+  const [editTitle, setEditTitle] = useState('')
+  const [editComments, setEditComments] = useState('')
+  const edit = {
+    title: editTitle,
+    comments: editComments,
+    id: targetId,
+  }
   const fetchCards = async () => {
     const { data } = await axios.get(`${process.env.REACT_APP_URL_WEBTOON}/webtoon`)
     setCards(data)
@@ -36,24 +35,22 @@ function DetailBox() {
     fetchCards()
   }, [])
 
-  const filteredCards = cards?.filter((cards) => cards.id == params.id)
-  // // todo 객체를 얻어옴(filteredTodos는 무조건 요소가 1개여야 함)
-  // // const card = filteredCards[0]
-  // console.log('card-->', card)
+  const card = cards?.find((cards) => cards.id == params.id)
 
   const CONFIRM_MESSAGE = '정말 삭제하겠습니까?'
   const removeCardHandlerButton = () => {
     if (window.confirm(CONFIRM_MESSAGE)) axios.delete(`${process.env.REACT_APP_URL_WEBTOON}/webtoon/${params.id}`)
+    fetchCards()
   }
   console.log('detail axios cards ->', cards)
 
   // 수정버튼 이벤트 핸들러 추가 👇
-  const onClickEditButtonHandler = (todoId, edit) => {
-    axios.patch(`${process.env.REACT_APP_URL_WEBTOON}/webtoon${todoId}`, edit)
+  const onClickEditButtonHandler = (cardID, edit) => {
+    axios.patch(`${process.env.REACT_APP_URL_WEBTOON}/webtoon/${cardID}`, edit)
 
     setTargetId('')
     setEditTitle('')
-    // setEditComments('')
+    setEditComments('')
     fetchCards()
   }
 
@@ -61,30 +58,22 @@ function DetailBox() {
     <>
       <DetailContainer>
         <CardBox>
-          {filteredCards?.map((card) => {
-            return (
-              <>
-                <tr>
-                  <th>TITLE :{card.title}</th>
-                </tr>
-                <tr>
-                  <td>ID :{card.id}</td>
-                </tr>
-                <tr>
-                  <td>COMMENTS :</td>
-                  <td>{card.comments}</td>
-                </tr>
-              </>
-            )
-          })}
+          <tr>
+            <th>TITLE :{card?.title}</th>
+          </tr>
+          <tr>
+            <td>ID :{card?.id}</td>
+          </tr>
+          <tr>
+            <td>COMMENTS :</td>
+            <td>{card?.comments}</td>
+          </tr>
         </CardBox>
         <div>
           <input
-            style={{
-              width: '40px',
-            }}
             type="text"
             placeholder="ID"
+            value={targetId}
             onChange={(e) => {
               setTargetId(e.target.value)
             }}
@@ -92,26 +81,22 @@ function DetailBox() {
           <input
             type="text"
             placeholder="수정값 입력"
+            value={editTitle}
             onChange={(e) => {
-              setEditTitle({
-                ...editTitle,
-                title: e.target.value,
-              })
+              setEditTitle(e.target.value)
             }}
           />
           <input
             type="text"
             placeholder="수정커맨트 입력"
+            value={editComments}
             onChange={(e) => {
-              setEditTitle({
-                ...editTitle,
-                comments: e.target.value,
-              })
+              setEditComments(e.target.value)
             }}
           />
         </div>
         <ButtonBox>
-          <Button type="button" backgroundColor="hotpink" onClick={() => onClickEditButtonHandler(targetId, editTitle)}>
+          <Button type="button" backgroundColor="hotpink" onClick={() => onClickEditButtonHandler(targetId, edit)}>
             수정하기
           </Button>
           <Button type="button" onClick={removeCardHandlerButton} backgroundColor="hotpink">

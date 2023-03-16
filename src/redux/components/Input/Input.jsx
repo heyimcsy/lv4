@@ -55,9 +55,10 @@ function Input() {
   //   setTitle('')
   //   setComments('')
   // }
+
   const onSubmitHandler = async (e) => {
     // //새로고침을 막아주는 기능
-    e.preventDefault()
+    // e.preventDefault()
 
     // 제목과 내용이 모두 존재해야만 정상처리(하나라도 없는 경우 오류 발생)
     // "01" : 필수 입력값 검증 실패 안내
@@ -83,9 +84,14 @@ function Input() {
       <form onSubmit={onSubmitHandler}>
         <RightMarginBox margin={10}>
           <label>컨텐츠 제목</label>
-          <input id="title" placeholder="컨텐츠 제목을 입력해주세요." onChange={onChangeTitleHandler} />
+          <input id="title" placeholder="컨텐츠 제목을 입력해주세요." value={title} onChange={onChangeTitleHandler} />
           <label>컨텐츠 평가</label>
-          <input id="comments" placeholder="컨텐츠에 대한 평가를 입력해주세요." onChange={onChangeCommentsHandler} />
+          <input
+            id="comments"
+            placeholder="컨텐츠에 대한 평가를 입력해주세요."
+            value={comments}
+            onChange={onChangeCommentsHandler}
+          />
         </RightMarginBox>
         <Button type="submit" backgroundColor="hotpink">
           평가완료
