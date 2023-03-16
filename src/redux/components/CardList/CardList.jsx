@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Card from '../Card/Card'
 import axios from 'axios'
+import styled from 'styled-components'
 
 // 추가하기 버튼을 누르면 갱신되는 이유가 리렌더링 때문인가?
 function CardList() {
@@ -23,12 +24,17 @@ function CardList() {
   console.log('axios cards ->', cards)
 
   return (
-    <div>
+    <StCardList>
       {cards?.map((card) => {
         return <Card key={card.id} card={card} />
       })}
-    </div>
+    </StCardList>
   )
 }
 
 export default CardList
+
+const StCardList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`

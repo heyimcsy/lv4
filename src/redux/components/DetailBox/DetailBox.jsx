@@ -4,6 +4,7 @@ import Button from '../common/Button'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
+import RightMarginBox from '../common/RightMarginBox'
 
 // cardBox : card.id, 뒤로가기 , card.title, card.comments
 // buttonBox : 수정버튼, 삭제버튼
@@ -58,16 +59,16 @@ function DetailBox() {
     <>
       <DetailContainer>
         <CardBox>
-          <tr>
-            <th>TITLE :{card?.title}</th>
-          </tr>
-          <tr>
-            <td>ID :{card?.id}</td>
-          </tr>
-          <tr>
-            <td>COMMENTS :</td>
-            <td>{card?.comments}</td>
-          </tr>
+          <div>
+            <h1>TITLE :{card?.title}</h1>
+          </div>
+          <div>
+            <h2>ID :{card?.id}</h2>
+          </div>
+          <div>
+            <div>COMMENTS :</div>
+            <CommentsDiv>{card?.comments}</CommentsDiv>
+          </div>
         </CardBox>
         <div>
           <input
@@ -78,6 +79,7 @@ function DetailBox() {
               setTargetId(e.target.value)
             }}
           />
+
           <input
             type="text"
             placeholder="수정값 입력"
@@ -86,6 +88,7 @@ function DetailBox() {
               setEditTitle(e.target.value)
             }}
           />
+
           <input
             type="text"
             placeholder="수정커맨트 입력"
@@ -112,18 +115,24 @@ export default DetailBox
 
 const DetailContainer = styled.div`
   border: 1px solid hotpink;
-  height: 500px;
-  width: 400px;
   margin: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 `
-const CardBox = styled.table`
+const CardBox = styled.div`
   border: 2px dotted blueviolet;
-  height: 450px;
+  height: 330px;
   width: 400px;
+  padding: 20px 20px 50px 20px;
+`
+const CommentsDiv = styled.div`
+  border: 1px dotted black;
+  height: 150px;
+  word-wrap: break-word;
+  overflow-y: auto;
+  padding: 20px 5px;
 `
 
 const ButtonBox = styled.div`

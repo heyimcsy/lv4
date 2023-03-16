@@ -84,7 +84,15 @@ function Input() {
       <form onSubmit={onSubmitHandler}>
         <RightMarginBox margin={10}>
           <label>컨텐츠 제목</label>
-          <input id="title" placeholder="컨텐츠 제목을 입력해주세요." value={title} onChange={onChangeTitleHandler} />
+          <input
+            minlength="5"
+            maxlength="10"
+            required
+            id="title"
+            placeholder="컨텐츠 제목을 입력해주세요."
+            value={title}
+            onChange={onChangeTitleHandler}
+          />
           <label>컨텐츠 평가</label>
           <input
             id="comments"
